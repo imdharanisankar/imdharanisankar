@@ -88,6 +88,8 @@ class ExtractGUI(object):
                                                         "*.xml*"),\
                                                        ))
         self.messagebox.insert(END, self.xmlFilelocation)
+        
+        
         return self.xmlFilelocation
     
     def browseCSVFiles(self):
@@ -98,11 +100,13 @@ class ExtractGUI(object):
                                                         "*.csv*"),\
                                                        ))
         self.messagebox1.insert(END, self.outputLocation)
+        
+        
         return self.outputLocation
     
     def getTranandguid(self):
         
-        self.errorInput()
+        
     
         tree = ET.parse(self.xmlFilelocation)
         root = tree.getroot()
@@ -120,11 +124,12 @@ class ExtractGUI(object):
         else:
             messagebox.showinfo("showinfo", "Transaction info not present in input XML")
             
+            
         return self.transaction_guid
     
     def getTransetguid(self):
         
-        self.errorInput()
+        
     
         tree = ET.parse(self.xmlFilelocation)
         root = tree.getroot()
@@ -137,7 +142,8 @@ class ExtractGUI(object):
                 self.transaction_set_guid[transactionset.attrib['description']] = transactionset.attrib['guid']
         else:
             messagebox.showinfo("showinfo", "Transaction set info not present in input XML")
-        
+            
+        return self.transaction_set_guid
     def savetransactiontoCSV(self):
     
   
@@ -194,7 +200,8 @@ class ExtractGUI(object):
        
         messagebox.showinfo("showinfo", "Completed!!. Please check your output location")
                 
-                
+        self.cleanUp()
+        
     def errorInput(self):
         
         
@@ -205,17 +212,16 @@ class ExtractGUI(object):
         #self.messagebox.delete(1.0,END)
         if self.xml_input == '' :
             messagebox.showinfo("showinfo", "XML file location cannot be empty")
+            self.messagebox.delete(0, END)
         elif self.csv_input == '':
             messagebox.showinfo("showinfo", "CSV file location cannot be empty")
-        
+            self.messagebox1.delete(0, END)
+        return self.xml_input, self.csv_input
+    
     def cleanUp(self):
         self.messagebox.delete(0, END)
         self.messagebox1.delete(0, END)
-        
-        
-    
-    
-        
+     
     def quitSession(self):    
          
         user_input = messagebox.askquestion("MessageBox", "Do you really want to Quit?")
@@ -226,12 +232,20 @@ class ExtractGUI(object):
     
         
     def txnfunc(self, event=None):
-        self.getTranandguid()
+        self.errorInput()
+        if self.xml_input == '' or self.csv_input == '':
+            pass
+        else:
+            self.getTranandguid()
         if 'transaction' in self.present_tags_txn:
             self.savetransactiontoCSV()
         
     def txnsetFunc(self):
-        self.getTransetguid()
+        self.errorInput()
+        if self.xml_input == '' or self.csv_input == '':
+            pass
+        else:
+            self.getTransetguid()
         if 'transactionset' in self.present_tags_set:
             self.savetxnsettoCSV()
         else:
