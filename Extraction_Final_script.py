@@ -124,6 +124,7 @@ class ExtractGUI(object):
                 self.transaction_guid[transaction.attrib['description']] =transaction.attrib['guid']
         else:
             messagebox.showinfo("showinfo", "Transaction info not present in input XML")
+            self.cleanUp()
             
             
         return self.transaction_guid
@@ -143,6 +144,7 @@ class ExtractGUI(object):
                 self.transaction_set_guid[transactionset.attrib['description']] = transactionset.attrib['guid']
         else:
             messagebox.showinfo("showinfo", "Transaction set info not present in input XML")
+            self.cleanUp()
             
         return self.transaction_set_guid
     def savetransactiontoCSV(self):
