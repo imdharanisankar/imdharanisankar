@@ -99,8 +99,9 @@ class ExtractGUI(object):
                                           filetypes = (("CSV file",
                                                         "*.csv*"),\
                                                        ))
+            
         self.messagebox1.insert(END, self.outputLocation)
-        
+            
         
         return self.outputLocation
     
@@ -231,14 +232,16 @@ class ExtractGUI(object):
             pass
     
         
-    def txnfunc(self, event=None):
+    def txnfunc(self):
+        
         self.errorInput()
+        
         if self.xml_input == '' or self.csv_input == '':
             pass
         else:
             self.getTranandguid()
-        if 'transaction' in self.present_tags_txn:
-            self.savetransactiontoCSV()
+            if 'transaction' in self.present_tags_txn:
+                self.savetransactiontoCSV()
         
     def txnsetFunc(self):
         self.errorInput()
@@ -246,10 +249,9 @@ class ExtractGUI(object):
             pass
         else:
             self.getTransetguid()
-        if 'transactionset' in self.present_tags_set:
-            self.savetxnsettoCSV()
-        else:
-            pass
+            if 'transactionset' in self.present_tags_set:
+                self.savetxnsettoCSV()
+    
         
             
 GUI = ExtractGUI(win)
